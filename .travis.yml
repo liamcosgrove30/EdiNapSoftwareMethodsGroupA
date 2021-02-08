@@ -1,7 +1,9 @@
+# added super user status to the build
 sudo: required
 
 language: java
 
+# state that we want docker service in our build
 services:
   - docker
 

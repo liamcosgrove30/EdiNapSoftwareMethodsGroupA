@@ -8,6 +8,7 @@
     <artifactId>GroupASoftwareMethods</artifactId>
     <version>0.1.0.1</version>
 
+    <!--Adding MongoDB dependency-->
     <dependencies>
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -16,11 +17,13 @@
         </dependency>
     </dependencies>
 
+    <!--Telling Maven to produce Java 8 code-->
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <!--Define how Maven assembles the JAR file-->
     <build>
         <plugins>
             <plugin>
