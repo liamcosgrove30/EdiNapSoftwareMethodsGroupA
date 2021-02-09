@@ -31,7 +31,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.napier.GroupA.App</mainClass>
+                            <mainClass>com.napier.GroupA</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
