@@ -1,15 +1,9 @@
-# added super user status to the build
 sudo: required
 
 language: java
 
-# state that we want docker service in our build
 services:
   - docker
 
 after_success:
-  - docker network create --driver bridge group-a-sem
-  - docker pull mongo
-  - docker run -d --name mongo-dbserver --network group-a-sem mongo
-  - docker build -t group-a-sem .
-  - docker run --network group-a-sem group-a-sem
+  - docker-compose up --abort-on-container-exit
