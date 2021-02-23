@@ -12,6 +12,7 @@ public class App
 {
     public static void main(String[] args)
     {
+        //
         // Connect to MongoDB
         MongoClient mongoClient = new MongoClient("mongo-dbserver");
         // Get a database - will create when we use it
