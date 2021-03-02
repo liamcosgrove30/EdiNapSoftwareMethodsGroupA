@@ -1,0 +1,305 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+actor A1 as "Operator"
+rectangle DB1 as "Database"
+
+rectangle "Top populated countries (World)" {
+    usecase	UC1 as "Top populated countries in the world"
+    usecase UC1a as "Print report"
+
+    A1 - UC1
+    UC1 ..> UC1a
+    UC1 - DB1
+}
+
+actor A2 as "Operator"
+rectangle DB2 as "Database"
+
+rectangle "Top populated countries (Continent)" {
+    usecase	UC2 as "Top populated countries in a continent "
+    usecase UC2a as "Print report"
+
+    A2 - UC2
+    UC2 ..> UC2a
+    UC2 - DB2
+}
+
+actor A3 as "Operator"
+rectangle DB3 as "Database"
+
+rectangle "Top populated countries (Region)" {
+    usecase	UC3 as "Top populated countries in a region"
+    usecase UC3a as "Print report"
+
+    A3 - UC3
+    UC3 ..> UC3a
+    UC3 - DB3
+}
+
+actor A4 as "Operator"
+rectangle DB4 as "Database"
+
+rectangle "Top N populated countries (World)" {
+    usecase	UC4 as "Top N populated countries in the world"
+    usecase UC4a as "Print report"
+
+    A4 - UC4
+    UC4 ..> UC4a
+    UC4 - DB4
+}
+
+actor A5 as "Operator"
+rectangle DB5 as "Database"
+
+rectangle "Top N populated countries (Continent)" {
+    usecase	UC5 as "Top N populated countries in a continent"
+    usecase UC5a as "Print report"
+
+    A5 - UC5
+    UC5 ..> UC5a
+    UC5 - DB5
+}
+
+actor A6 as "Operator"
+rectangle DB6 as "Database"
+
+rectangle "Top N populated countries (Region)" {
+    usecase	UC6 as "Top N populated countries in a region"
+    usecase UC6a as "Print report"
+
+    A6 - UC6
+    UC6 ..> UC6a
+    UC6 - DB6
+}
+
+actor A7 as "Operator"
+rectangle DB7 as "Database"
+
+rectangle "Top Populated cities (World)" {
+    usecase	UC7 as "Top populated cities in the world"
+    usecase UC7a as "Print report"
+
+    A7 - UC7
+    UC7 ..> UC7a
+    UC7 - DB7
+}
+
+actor A8 as "Operator"
+rectangle DB8 as "Database"
+
+rectangle "Top Populated cities (Continent)" {
+    usecase	UC8 as "Top populated cities in a continent"
+    usecase UC8a as "Print report"
+
+    A8 - UC8
+    UC8 ..> UC8a
+    UC8 - DB8
+}
+
+actor A9 as "Operator"
+rectangle DB9 as "Database"
+
+rectangle "Top Populated cities (Region)" {
+    usecase	UC9 as "Top populated cities in a region"
+    usecase UC9a as "Print report"
+
+    A9 - UC9
+    UC9 ..> UC9a
+    UC9 - DB9
+}
+
+actor A10 as "Operator"
+rectangle DB10 as "Database"
+
+rectangle "Top Populated cities (Country)" {
+    usecase	UC10 as "Top populated cities in a country"
+    usecase UC10a as "Print report"
+
+    A10 - UC10
+    UC10 ..> UC10a
+    UC10 - DB10
+}
+
+actor A11 as "Operator"
+rectangle DB11 as "Database"
+
+rectangle "Top Populated cities (District)" {
+    usecase	UC11 as "Top populated cities in a district"
+    usecase UC11a as "Print report"
+
+    A11 - UC11
+    UC11 ..> UC11a
+    UC11 - DB11
+}
+
+actor A12 as "Operator"
+rectangle DB12 as "Database"
+
+rectangle "Top N Populated cities (World)" {
+    usecase	UC12 as "N populated cities in the world"
+    usecase UC12a as "Print report"
+
+    A12 - UC12
+    UC12 ..> UC12a
+    UC12 - DB12
+}
+
+actor A13 as "Operator"
+rectangle DB13 as "Database"
+
+rectangle "Top N Populated cities (Continent)" {
+    usecase	UC13 as "N populated cities in a continent"
+    usecase UC13a as "Print report"
+
+    A13 - UC13
+    UC13 ..> UC13a
+    UC13 - DB13
+}
+
+actor A14 as "Operator"
+rectangle DB14 as "Database"
+
+rectangle "Top N Populated cities (Region)" {
+    usecase	UC14 as "N populated cities in a region"
+    usecase UC14a as "Print report"
+
+    A14 - UC14
+    UC14 ..> UC14a
+    UC14 - DB14
+}
+
+actor A15 as "Operator"
+rectangle DB15 as "Database"
+
+rectangle "Top N Populated cities (Country)" {
+    usecase	UC15 as "N populated cities in a country"
+    usecase UC15a as "Print report"
+
+    A15 - UC15
+    UC15 ..> UC15a
+    UC15 - DB15
+}
+
+actor A16 as "Operator"
+rectangle DB16 as "Database"
+
+rectangle "Top N Populated cities (District)" {
+    usecase	UC16 as "N populated cities in a district"
+    usecase UC16a as "Print report"
+
+    A16 - UC16
+    UC16 ..> UC16a
+    UC16 - DB16
+}
+
+actor A17 as "Operator"
+rectangle DB17 as "Database"
+
+rectangle "Population capital cities (World)" {
+    usecase	UC17 as "Capital cities population in the world"
+    usecase UC17a as "Print report"
+
+    A17 - UC17
+    UC17 ..> UC17a
+    UC17 - DB17
+}
+
+actor A18 as "Operator"
+rectangle DB18 as "Database"
+
+rectangle "Population capital cities (Continent)" {
+    usecase	UC18 as "Capital cities population in a continent"
+    usecase UC18a as "Print report"
+
+    A18 - UC18
+    UC18 ..> UC18a
+    UC18 - DB18
+}
+
+actor A19 as "Operator"
+rectangle DB19 as "Database"
+
+rectangle "Population capital cities (Region)" {
+    usecase	UC19 as "Capital cities population in a region"
+    usecase UC19a as "Print report"
+
+    A19 - UC19
+    UC19 ..> UC19a
+    UC19 - DB19
+}
+
+actor A20 as "Operator"
+rectangle DB20 as "Database"
+
+rectangle "N populated capital cities (World)" {
+    usecase	UC20 as "N populated capital cities in the world"
+    usecase UC20a as "Print report"
+
+    A20 - UC20
+    UC20 ..> UC20a
+    UC20 - DB20
+}
+
+actor A21 as "Operator"
+rectangle DB21 as "Database"
+
+rectangle "N populated capital cities (Continent)" {
+    usecase	UC21 as "N populated capital cities in a continent"
+    usecase UC21a as "Print report"
+
+    A21 - UC21
+    UC21 ..> UC21a
+    UC21 - DB21
+}
+
+actor A22 as "Operator"
+rectangle DB22 as "Database"
+
+rectangle "N populated capital cities (Region)" {
+    usecase	UC22 as "N populated capital cities in a region"
+    usecase UC22a as "Print report"
+
+    A22 - UC22
+    UC22 ..> UC22a
+    UC22 - DB22
+}
+
+actor A23 as "Operator"
+rectangle DB23 as "Database"
+
+rectangle "Population of people (Continent)" {
+    usecase	UC23 as "Population of people in each continent"
+    usecase UC23a as "Print report"
+
+    A23 - UC23
+    UC23 ..> UC23a
+    UC23 - DB23
+}
+
+actor A24 as "Operator"
+rectangle DB24 as "Database"
+
+rectangle "Population of people (Region)" {
+    usecase	UC24 as "Population of people in each region"
+    usecase UC24a as "Print report"
+
+    A24 - UC24
+    UC24 ..> UC24a
+    UC24 - DB24
+}
+
+actor A25 as "Operator"
+rectangle DB25 as "Database"
+
+rectangle "Population of people (Country)" {
+    usecase	UC25 as "Population of people in each country"
+    usecase UC25a as "Print report"
+
+    A25 - UC25
+    UC25 ..> UC25a
+    UC25 - DB25
+}
+
+@enduml
+
