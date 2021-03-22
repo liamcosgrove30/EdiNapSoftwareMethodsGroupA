@@ -135,6 +135,15 @@ public class App
         }
     }
 
+    public void printPopReport(ArrayList<Country>country){
+        System.out.println(String.format("%-10, %-15", "Country Name, Population"));
+        for(Country cntry:country){
+            String cntry_string =
+                    String.format("%-10,%-15", cntry.country_name, cntry.country_population);
+                    System.out.println(cntry_string);
+        }
+    }
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -149,7 +158,7 @@ public class App
 
         //Get Countries by Population
         ArrayList<Country> countries = a.countriesInWorldByPop();
-        System.out.println(countries.size());
+        a.printPopReport(countries);
 
         // Disconnect from database
         a.disconnect();
