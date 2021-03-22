@@ -1,6 +1,7 @@
 package com.napier.GroupA;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class App
 {
@@ -70,6 +71,7 @@ public class App
         }
     }
 
+    //Get a Country by its Country Code
     public Country getCountry(String code){
         try {
           //create an SQL Statement
@@ -101,9 +103,35 @@ public class App
         }
     }
 
+    //Display the Country
     public void displayCountry(Country cntry){
         if(cntry != null){
             System.out.println(cntry.country_code + " " + cntry.country_name);
+        }
+    }
+
+    public ArrayList<Country> countriesInWorldByPop(){
+        try {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT country.Name, country.Population"
+                    + "FROM country"
+                    + "ORDER BY country.Population";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+            ArrayList<Country> countries = new ArrayList<Country>();
+            while (rset.next()){
+                Country cntry = new Country();
+                cntry.country_name = rset.getString("country.Name");
+                cntry.country_population = rset.getInt("country.Population");
+                countries.add(cntry);
+            }
+            return countries;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get Countries by Population");
+            return null;
         }
     }
 
@@ -115,8 +143,13 @@ public class App
         // Connect to database
         a.connect();
 
-        Country cntry = a.getCountry("AFG");
-        a.displayCountry(cntry);
+        //Get Afghanistan
+        //Country cntry = a.getCountry("AFG");
+        //a.displayCountry(cntry);
+
+        //Get Countries by Population
+        ArrayList<Country> countries = a.countriesInWorldByPop();
+        System.out.println(countries.size());
 
         // Disconnect from database
         a.disconnect();
