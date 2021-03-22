@@ -3,7 +3,7 @@ package com.napier.GroupA;
 /**
  *Enum of continents
  */
-enum ContinentEnum{Asia,Europe,North_America,Africa,Oceania,South_America}
+//enum ContinentEnum{Asia,Europe,North_America,Africa,Oceania,South_America}
 
 /**
  *Represents a Country in the db.
@@ -23,7 +23,7 @@ public class Country {
     /**
      *Continent of Country
      */
-    public ContinentEnum country_continent;
+    //public ContinentEnum country_continent;
 
     /**
      *Region of Country
