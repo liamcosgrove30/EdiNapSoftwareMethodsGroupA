@@ -70,6 +70,43 @@ public class App
         }
     }
 
+    public Country getCountry(String code){
+        try {
+          //create an SQL Statement
+            Statement stmt = con.createStatement();
+          //create string for SQL statement
+            String strSelect =
+                    "SELECT Code, Name, Region"
+                    +"FROM country"
+                    +"WHERE Code =" + code;
+            //Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //return new country if valid
+            //check one is returned
+            if(rset.next())
+            {
+                Country cntry = new Country();
+                cntry.country_code=rset.getString("Code");
+                cntry.country_name=rset.getString("Name");
+                cntry.country_region= rset.getString("Region");
+                return cntry;
+            }else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    public void displayCountry(Country cntry){
+        if(cntry != null){
+            System.out.println(cntry.country_code + " " + cntry.country_name);
+        }
+    }
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -77,6 +114,9 @@ public class App
 
         // Connect to database
         a.connect();
+
+        Country cntry = a.getCountry("AFG");
+        a.displayCountry(cntry);
 
         // Disconnect from database
         a.disconnect();
