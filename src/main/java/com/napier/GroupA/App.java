@@ -110,6 +110,7 @@ public class App
         }
     }
 
+    //Sort each country by population
     public ArrayList<Country> countriesInWorldByPop(){
         try {
             Statement stmt = con.createStatement();
@@ -135,14 +136,22 @@ public class App
         }
     }
 
+    //Print each country in order of population
     public void printPopReport(ArrayList<Country>country){
+        if (country == null){
+            System.out.println("No Countries");
+            return;
+        }
         System.out.println(String.format("%-10s, %-15s", "Country Name", "Population"));
         for(Country cntry:country){
+            if(cntry == null)
+                continue;;
             String cntry_string =
                     String.format("%-10s,%-15s", cntry.country_name, cntry.country_population);
-                    System.out.println(cntry_string);
+            System.out.println(cntry_string);
         }
     }
+
 
     public static void main(String[] args)
     {
