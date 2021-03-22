@@ -105,7 +105,11 @@ public class App
 
     //Display the Country
     public void displayCountry(Country cntry){
-        if(cntry != null){
+        if (cntry == null){
+            System.out.println("No Country");
+            return;
+        }
+        else if(cntry != null){
             System.out.println(cntry.country_code + " " + cntry.country_name);
         }
     }
