@@ -136,10 +136,10 @@ public class App
     }
 
     public void printPopReport(ArrayList<Country>country){
-        System.out.println(String.format("%-10, %-15", "Country Name, Population"));
+        System.out.println(String.format("%-10s, %-15s", "Country Name", "Population"));
         for(Country cntry:country){
             String cntry_string =
-                    String.format("%-10,%-15", cntry.country_name, cntry.country_population);
+                    String.format("%-10s,%-15s", cntry.country_name, cntry.country_population);
                     System.out.println(cntry_string);
         }
     }
