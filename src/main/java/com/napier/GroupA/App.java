@@ -72,7 +72,7 @@ public class App
     }
 
     //Get a Country by its Country Code
-    public Country getCountry(String code){
+    public Country getCountry(int code){
         try {
           //create an SQL Statement
             Statement stmt = con.createStatement();

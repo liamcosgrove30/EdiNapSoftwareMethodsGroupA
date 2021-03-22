@@ -28,7 +28,7 @@ public class AppTest {
         app.printPopReport(null);
     }
 
-    //UnitTest to test when the countries array is empty in rhw primtPopReport function
+    //UnitTest to test when the countries array is empty in rhw printPopReport function
     @Test
     void printPopulationTestEmpty(){
         ArrayList<Country> countries = new ArrayList<Country>();
