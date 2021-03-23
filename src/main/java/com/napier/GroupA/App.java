@@ -3,6 +3,9 @@ package com.napier.GroupA;
 import java.sql.*;
 import java.util.ArrayList;
 
+/**
+ * Main App where we connect to the database and extract report information.
+ */
 public class App
 {
 
@@ -34,7 +37,7 @@ public class App
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(0);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
@@ -79,8 +82,8 @@ public class App
           //create string for SQL statement
             String strSelect =
                     "SELECT Code, Name, Region"
-                    +"FROM country"
-                    +"WHERE Code =" + code;
+                    +" FROM country"
+                    +" WHERE Code ='" + code + "'";
             //Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //return new country if valid

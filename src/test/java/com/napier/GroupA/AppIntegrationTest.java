@@ -25,7 +25,7 @@ public class AppIntegrationTest
     }
 
 
-/*    //Integration Test to test normal conditions in the printPopReport
+    //Integration Test to test normal conditions in the printPopReport
     @Test
     void testGetCountry()
     {
@@ -33,5 +33,5 @@ public class AppIntegrationTest
         assertEquals(cntry.country_code, "AFG");
         assertEquals(cntry.country_name, "Afghanistan");
         assertEquals(cntry.country_region, "Southern and Central Asia");
-    }*/
+    }
 }
