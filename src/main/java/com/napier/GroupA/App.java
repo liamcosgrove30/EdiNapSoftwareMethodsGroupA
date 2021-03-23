@@ -72,7 +72,7 @@ public class App
     }
 
     //Get a Country by its Country Code
-    public Country getCountry(int code){
+    public Country getCountry(String code){
         try {
           //create an SQL Statement
             Statement stmt = con.createStatement();
@@ -166,8 +166,8 @@ public class App
         a.connect("localhost:33060");
 
         //Get Afghanistan
-        //Country cntry = a.getCountry("AFG");
-        //a.displayCountry(cntry);
+        Country cntry = a.getCountry("AFG");
+        a.displayCountry(cntry);
 
         //Get Countries by Population
         ArrayList<Country> countries = a.countriesInWorldByPop();
