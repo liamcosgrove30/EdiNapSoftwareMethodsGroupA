@@ -39,7 +39,7 @@ public class Country {
         return continent;
     }
 
-    public void setContinent(String continents){
+    public void setContinent(String continent){
         this.continent=continent;
     }
 

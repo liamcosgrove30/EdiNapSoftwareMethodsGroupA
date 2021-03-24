@@ -19,6 +19,20 @@ public class App
     private Connection con = null;
 
     /**
+     * Regions in the world
+     */
+    String[] regions = {"Caribbean", "Southern and Central Asia", "Central Africa", "Southern Europe", "Middle East",
+            "South America", "Polynesia", "Antarctica", "Australia and New Zealand", "Western Europe", "Eastern Africa",
+            "Western Africa", "Eastern Europe", "Central America", "North America", "Southeast Asia", "Southern Africa",
+            "Eastern Asia", "Nordic Countries", "Northern Africa", "Baltic Countries", "Melanesia", "Micronesia",
+            "British Islands", "Micronesia/Caribbean"};
+
+    /**
+     * Continents of the world
+     */
+    String[] continents = {"North America", "South America", "Asia", "Africa", "Europe", "Oceania", "Antarctica"};
+
+    /**
      * Connect to the MySQL database.
      */
     public void connect(String location)
@@ -97,6 +111,53 @@ public class App
 
         printCountryReport(countries, "All the countries in the world organised by" +
                 "largest population to smallest", "./reports/report1.md");
+    }
+
+    /**
+     * Generate report 2, countries in a continent organised by largest population to smallest
+     * @param countries
+     * @param continent
+     */
+    private static void report2(ArrayList<Country> countries, String continent){
+        ArrayList<Country> countries1 = new ArrayList<>();
+
+        for (Country c: countries){
+            if(c.getContinent().equals(continent)){
+                countries1.add(c);
+            }
+        }
+        Collections.sort(countries1, new Comparator<Country>() {
+            @Override
+            public int compare(Country o1, Country o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+        printCountryReport(countries1, "All countries in a continent (" + continent +
+                ") organised by largest population to the smallest", "./reports/report2_" + continent + ".md");
+    }
+
+    private static void report3(ArrayList<Country> countries, String region){
+        ArrayList<Country> countries1 = new ArrayList<>();
+        for (Country c : countries){
+            if(c.getRegion().equals(region)){
+                countries1.add(c);
+            }
+        }
+        Collections.sort(countries1, new Comparator<Country>() {
+            @Override
+            public int compare(Country o1, Country o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return -1;
+                }
+                else{return  1;}
+            }
+        });
+        printCountryReport(countries1, "All the countries in a region (" + region +
+                ") organised from largest population to smallest", "./reports/report3_" + region + ".md");
     }
 
     /**
@@ -276,6 +337,14 @@ public class App
         ArrayList<Country> countries = a.getCountries();
 
         report1(countries);
+
+        for(String continent:a.continents){
+            report2(countries, continent);
+        }
+
+        for(String region :a.regions){
+            report3(countries, region);
+        }
 
         outputReadme();
 
