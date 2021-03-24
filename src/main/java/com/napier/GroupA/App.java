@@ -78,6 +78,10 @@ public class App
         }
     }
 
+    /**
+     * Generate report 1, countries in the world from largest to smallest
+     * @param countries
+     */
     private static void report1(ArrayList<Country> countries){
         Collections.sort(countries, new Comparator<Country>() {
             @Override
@@ -95,6 +99,12 @@ public class App
                 "largest population to smallest", "./reports/report1.md");
     }
 
+    /**
+     * Method to print out every country
+     * @param countries
+     * @param heading
+     * @param filename
+     */
     public static void printCountryReport(ArrayList<Country> countries, String heading, String filename) {
         StringBuilder sb = new StringBuilder();
         sb.append("# " + heading + "\r\n\r\n");
@@ -114,6 +124,9 @@ public class App
         }
     }
 
+    /**
+     * Method to print outputs
+     */
     private static void outputReadme() {
         File dir = new File("./reports/");
         File [] files = dir.listFiles(new FilenameFilter() {
@@ -136,6 +149,10 @@ public class App
         }
     }
 
+    /**
+     * Create a HashMap for every City
+     * @return
+     */
     private HashMap<Integer, City> getCities() {
         try {
             // Create an SQL statement
@@ -167,6 +184,10 @@ public class App
         }
     }
 
+    /**
+     * Create a HashMap for every Language
+     * @return
+     */
     private HashMap<Country, CountryLanguage> getCountryLanguages() {
         try {
             // Create an SQL statement
