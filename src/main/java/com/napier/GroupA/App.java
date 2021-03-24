@@ -1,7 +1,11 @@
 package com.napier.GroupA;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * Main App where we connect to the database and extract report information.
@@ -37,7 +41,7 @@ public class App
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(0);
+                Thread.sleep(3000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
@@ -74,91 +78,171 @@ public class App
         }
     }
 
-    //Get a Country by its Country Code
-    public Country getCountry(String code){
-        try {
-          //create an SQL Statement
-            Statement stmt = con.createStatement();
-          //create string for SQL statement
-            String strSelect =
-                    "SELECT Code, Name, Region"
-                    +" FROM country"
-                    +" WHERE Code ='" + code + "'";
-            //Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            //return new country if valid
-            //check one is returned
-            if(rset.next())
-            {
-                Country cntry = new Country();
-                cntry.country_code=rset.getString("Code");
-                cntry.country_name=rset.getString("Name");
-                cntry.country_region= rset.getString("Region");
-                return cntry;
-            }else
-                return null;
+    private static void report1(ArrayList<Country> countries){
+        Collections.sort(countries, new Comparator<Country>() {
+            @Override
+            public int compare(Country o1, Country o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }
+                else{
+                    return 1;
+                }
+            }
+        });
+
+        printCountryReport(countries, "All the countries in the world organised by" +
+                "largest population to smallest", "./reports/report1.md");
+    }
+
+    public static void printCountryReport(ArrayList<Country> countries, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | :--- | :--- |\r\n");
+        for (Country country : countries) {
+            sb.append(country.toMarkdown() + "\r\n");
         }
-        catch (Exception e)
-        {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + countries.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void outputReadme() {
+        File dir = new File("./reports/");
+        File [] files = dir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".md");
+            }
+        });
+        String str = "# Reports\r\n";
+        for(File file : files){
+            str += "[" + file.getName() + "](<./reports/" + file.getName() + ">)  " + "\r\n";
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File("./README.md")));
+            writer.write(str);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private HashMap<Integer, City> getCities() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect = "SELECT * from city ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            HashMap<Integer, City> cities = new HashMap<>();
+            while (rset.next()) {
+                City city = new City();
+                city.setId(rset.getInt("ID"));
+                city.setName(rset.getString("Name"));
+                Country country = new Country();
+                country.setCode(rset.getString("CountryCode"));
+                city.setCountry(country);
+                city.setDistrict(rset.getString("District"));
+                city.setPopulation(rset.getInt("Population"));
+                cities.put(city.getId(), city);
+            }
+            return cities;
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get country details");
+            System.out.println("Failed to get city details");
             return null;
         }
     }
 
-    //Display the Country
-    public void displayCountry(Country cntry){
-        if (cntry == null){
-            System.out.println("No Country");
-            return;
-        }
-        else if(cntry != null){
-            System.out.println(cntry.country_code + " " + cntry.country_name);
+    private HashMap<Country, CountryLanguage> getCountryLanguages() {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect = "SELECT * from countrylanguage ";
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            HashMap<Country, CountryLanguage> countryLanguages = new HashMap<>();
+            while (rset.next()) {
+                CountryLanguage countryLanguage = new CountryLanguage();
+                Country country = new Country();
+                country.setCode(rset.getString("CountryCode"));
+                countryLanguage.setCountry(country);
+                countryLanguage.setLanguage(rset.getString("Language"));
+                countryLanguage.setIsOfficial(rset.getString("IsOfficial"));
+                countryLanguage.setPercentage(rset.getDouble("Percentage"));
+                countryLanguages.put(countryLanguage.getCountry(), countryLanguage);
+            }
+            return countryLanguages;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
         }
     }
 
-    //Sort each country by population
-    public ArrayList<Country> countriesInWorldByPop(){
+    public ArrayList<Country> getCountries() {
+        //country set to null
+        HashMap<Integer, City> cities = getCities();
+        //country set to null
+        HashMap<Country, CountryLanguage> countryLanguages = getCountryLanguages();
         try {
+            // Create an SQL statement
             Statement stmt = con.createStatement();
+            // Create string for SQL statement
 
-            String strSelect =
-                    "SELECT country.Name, country.Population"
-                    + "FROM country"
-                    + "ORDER BY country.Population";
+            String strSelect = "SELECT * from country ";
 
+            // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            ArrayList<Country> countries = new ArrayList<Country>();
-            while (rset.next()){
-                Country cntry = new Country();
-                cntry.country_name = rset.getString("country.Name");
-                cntry.country_population = rset.getInt("country.Population");
-                countries.add(cntry);
+
+            ArrayList<Country> countries = new ArrayList<>();
+            while (rset.next()) {
+                Country country = new Country();
+                country.setCode(rset.getString("Code"));
+                country.setName(rset.getString("Name"));
+                country.setContinent(rset.getString("Continent"));
+                country.setRegion(rset.getString("Region"));
+                country.setPopulation(rset.getInt("Population"));
+                country.setCapital(cities.get(rset.getInt("Capital")));
+                for (City city : cities.values()) {
+                    if (city.getCountry().getCode().equals(country.getCode())) {
+                        country.getCities().add(city);
+                        city.setCountry(country);
+                    }
+                }
+                countries.add(country);
+
+                for (CountryLanguage cl : countryLanguages.values()) {
+                    if (cl.getCountry().getCode().equals(country.getCode())) {
+                        country.getCountryLanguages().add(cl);
+                        cl.setCountry(country);
+                    }
+                }
             }
             return countries;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get Countries by Population");
+            System.out.println("Failed to get city details");
             return null;
         }
     }
-
-    //Print each country in order of population
-    public void printPopReport(ArrayList<Country>country){
-        if (country == null){
-            System.out.println("No Countries");
-            return;
-        }
-        System.out.println(String.format("%-10s, %-15s", "Country Name", "Population"));
-        for(Country cntry:country){
-            if(cntry == null)
-                continue;;
-            String cntry_string =
-                    String.format("%-10s,%-15s", cntry.country_name, cntry.country_population);
-            System.out.println(cntry_string);
-        }
-    }
-
 
     public static void main(String[] args)
     {
@@ -168,13 +252,11 @@ public class App
         // Connect to database
         a.connect("localhost:33060");
 
-        //Get Afghanistan
-        Country cntry = a.getCountry("AFG");
-        a.displayCountry(cntry);
+        ArrayList<Country> countries = a.getCountries();
 
-        //Get Countries by Population
-        ArrayList<Country> countries = a.countriesInWorldByPop();
-        a.printPopReport(countries);
+        report1(countries);
+
+        outputReadme();
 
         // Disconnect from database
         a.disconnect();

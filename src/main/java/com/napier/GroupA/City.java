@@ -5,28 +5,66 @@ package com.napier.GroupA;
  */
 public class City {
 
-    /**
-     *City ID number
-     */
-    public int city_id;
+    private int id;
+    private String name;
+    private Country country;
+    private String district;
+    private int population;
 
-    /**
-     *City Name
-     */
-    public String city_name;
+    public City() {
+    }
 
-    /**
-     *Country code that city is located in
-     */
-    public String city_country_code;
+    public int getId() {
+        return id;
+    }
 
-    /**
-     *District that city is in
-     */
-    public String city_district;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    /**
-     *City Population
-     */
-    public int city_population;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(int population) {
+        this.population = population;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" + "id=" + id + ", name='" + name + '\'' +
+                "country=" + country.getName() + '\'' + ", district='" + district + '\'' +
+                ", population=" + population + '}';
+    }
+
+    public String toMarkdown() {
+        String str = "";
+        str += "|" + id + "|" + name + "|" + country.getName() + "|" + district + "|" + population + "|";
+        return str;
+    }
+
 }
