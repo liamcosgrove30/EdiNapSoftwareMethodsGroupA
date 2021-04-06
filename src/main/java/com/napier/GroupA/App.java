@@ -161,6 +161,28 @@ public class App
     }
 
     /**
+     * Generate report 7, cities in the world from largest to smallest
+     * @param cities
+     */
+    private static void report7(HashMap<Integer, City> cities)
+    {
+        cities.containsValue ((Comparator<City>) (o1, o2) -> {
+            if (o1.getPopulation () > o2.getPopulation ())
+            {
+                return -1;
+            }
+            else
+                {
+                return 1;
+                }
+        });
+
+        printCityReport(cities, "All the cities in the world organised by " +
+                                      "largest population to smallest", "./reports/report7.md");
+    }
+
+
+    /**
      * Method to print out every country
      * @param countries
      * @param heading
@@ -180,6 +202,31 @@ public class App
             writer.write(sb.toString());
             writer.close();
             System.out.println("Successfully output " + countries.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to print out every city
+     * @param cities
+     * @param heading
+     * @param filename
+     */
+    public static void printCityReport(HashMap<Integer, City> cities, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Name | Country | District | Population |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- |\r\n");
+        for (City city : cities.values ()) {
+            sb.append(city.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + cities.size() + " results to " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -337,6 +384,9 @@ public class App
         ArrayList<Country> countries = a.getCountries();
 
         report1(countries);
+
+        HashMap<Integer, City> cities = a.getCities ();
+        report7 (cities);
 
         for(String continent:a.continents){
             report2(countries, continent);

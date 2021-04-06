@@ -56,14 +56,14 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" + "id=" + id + ", name='" + name + '\'' +
-                "country=" + country.getName() + '\'' + ", district='" + district + '\'' +
+        return "City{" + ", name='" + name + '\'' +
+                "country=" + country.getCode() + '\'' + ", district='" + district + '\'' +
                 ", population=" + population + '}';
     }
 
     public String toMarkdown() {
         String str = "";
-        str += "|" + id + "|" + name + "|" + country.getName() + "|" + district + "|" + population + "|";
+        str += "|" + name + "|" + country.getCode() + "|" + district + "|" + population + "|";
         return str;
     }
 
