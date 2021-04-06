@@ -160,6 +160,26 @@ public class App
                 ") organised from largest population to smallest", "./reports/report3_" + region + ".md");
     }
 
+    private static void report4(ArrayList<Country> countries, int input){
+        ArrayList<Country> countries1 = new ArrayList<>();
+
+        Collections.sort(countries, new Comparator<Country>() {
+            @Override
+            public int compare(Country o1, Country o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return -1;
+                }else{return 1;}
+            }
+        });
+
+
+        for(int i =0;i < input; i++) {
+            countries1.add(countries.get(input));
+        }
+        printCountryReport(countries1, "The top " + input+ " countries in the world organised by" +
+                "largest population to smallest", "./reports/report4.md");
+    }
+
     /**
      * Method to print out every country
      * @param countries
@@ -342,9 +362,11 @@ public class App
             report2(countries, continent);
         }
 
-        for(String region :a.regions){
-            report3(countries, region);
-        }
+     //   for(String region :a.regions){
+       //     report3(countries, region);
+       // }
+
+        report4(countries,7);
 
         outputReadme();
 
