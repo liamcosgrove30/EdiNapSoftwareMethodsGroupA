@@ -2,10 +2,9 @@ package com.napier.GroupA;
 
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
+
+import static java.util.Collections.*;
 
 /**
  * Main App where we connect to the database and extract report information.
@@ -97,7 +96,7 @@ public class App
      * @param countries
      */
     private static void report1(ArrayList<Country> countries){
-        Collections.sort(countries, new Comparator<Country>() {
+        sort(countries, new Comparator<Country>() {
             @Override
             public int compare(Country o1, Country o2) {
                 if(o1.getPopulation() > o2.getPopulation()){
@@ -126,7 +125,7 @@ public class App
                 countries1.add(c);
             }
         }
-        Collections.sort(countries1, new Comparator<Country>() {
+        sort(countries1, new Comparator<Country>() {
             @Override
             public int compare(Country o1, Country o2) {
                 if (o1.getPopulation() > o2.getPopulation()){
@@ -147,7 +146,7 @@ public class App
                 countries1.add(c);
             }
         }
-        Collections.sort(countries1, new Comparator<Country>() {
+        sort(countries1, new Comparator<Country>() {
             @Override
             public int compare(Country o1, Country o2) {
                 if(o1.getPopulation() > o2.getPopulation()){
@@ -164,21 +163,21 @@ public class App
      * Generate report 7, cities in the world from largest to smallest
      * @param cities
      */
-    private static void report7(HashMap<Integer, City> cities)
-    {
-        cities.containsValue ((Comparator<City>) (o1, o2) -> {
-            if (o1.getPopulation () > o2.getPopulation ())
-            {
-                return -1;
-            }
-            else
-                {
-                return 1;
+    private static void report7(ArrayList<City> cities){
+        sort(cities, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
                 }
+                else{
+                    return 1;
+                }
+            }
         });
 
-        printCityReport(cities, "All the cities in the world organised by " +
-                                      "largest population to smallest", "./reports/report7.md");
+        printCityReport("All the cities in the world organised by " +
+                        "largest population to smallest" + "./reports/report7.md");
     }
 
 
@@ -210,23 +209,19 @@ public class App
     /**
      * Method to print out every city
      * @param cities
-     * @param heading
-     * @param filename
      */
-    public static void printCityReport(HashMap<Integer, City> cities, String heading, String filename) {
+    public static void printCityReport(ArrayList<City> cities) {
         StringBuilder sb = new StringBuilder();
-        sb.append("# " + heading + "\r\n\r\n");
-        sb.append("| Name | Country | District | Population |\r\n");
-        sb.append("| :--- | :--- | :--- | :--- |\r\n");
-        for (City city : cities.values ()) {
-            sb.append(city.toMarkdown() + "\r\n");
+        sb.append("| ID | Name | CountryCode | District | Population |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | :---: |\r\n");
+        for (City city : cities) {
+            sb.append(city.toString() + "\r\n");
         }
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer = new BufferedWriter(new FileWriter(new File("cities.md")));
             writer.write(sb.toString());
             writer.close();
-            System.out.println("Successfully output " + cities.size() + " results to " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -382,11 +377,11 @@ public class App
         a.connect("localhost:33060");
 
         ArrayList<Country> countries = a.getCountries();
-
         report1(countries);
 
-        HashMap<Integer, City> cities = a.getCities ();
-        report7 (cities);
+        ArrayList<City> cities = a.getCities();
+        report7(cities);
+
 
         for(String continent:a.continents){
             report2(countries, continent);
