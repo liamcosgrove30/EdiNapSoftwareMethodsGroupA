@@ -1,5 +1,6 @@
 package com.napier.GroupA;
 
+import javax.swing.*;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
@@ -108,7 +109,7 @@ public class App
             }
         });
 
-        printCountryReport(countries, "All the countries in the world organised by" +
+        printCountryReport(countries, "All the countries in the world organised by " +
                 "largest population to smallest", "./reports/report1.md");
     }
 
@@ -160,11 +161,21 @@ public class App
     }
 
     /**
-     * Generate report 7, cities in the world from largest to smallest
+     * Generate report 7, cities in the world from largest to smallest population
      * @param cities
      */
-    private static void report7(ArrayList<City> cities){
-        sort(cities, new Comparator<City>() {
+    private static void report7(HashMap< Integer, City> cities)
+    {
+        // Finding the Set of keys from
+        // the HashMap
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of keys
+        // by passing the keySet
+        ArrayList<City> listOfValues
+                = new ArrayList<City>(valueSet);
+
+        sort(listOfValues, new Comparator<City>() {
             @Override
             public int compare(City o1, City o2) {
                 if(o1.getPopulation() > o2.getPopulation()){
@@ -176,8 +187,8 @@ public class App
             }
         });
 
-        printCityReport("All the cities in the world organised by " +
-                        "largest population to smallest" + "./reports/report7.md");
+        printCityReport(listOfValues, "All the cities in the world organised by " +
+                                      "largest population to smallest", "./reports/report7.md");
     }
 
 
@@ -209,23 +220,48 @@ public class App
     /**
      * Method to print out every city
      * @param cities
+     * @param heading
+     * @param filename
      */
-    public static void printCityReport(ArrayList<City> cities) {
+    public static void printCityReport(ArrayList<City> cities, String heading, String filename) {
         StringBuilder sb = new StringBuilder();
-        sb.append("| ID | Name | CountryCode | District | Population |\r\n");
-        sb.append("| :--- | :--- | :--- | :--- | :---: |\r\n");
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Name | CountryCode | District | Population |\r\n");
+        sb.append("| :--- | :--- | :--- | :---: |\r\n");
         for (City city : cities) {
-            sb.append(city.toString() + "\r\n");
+            sb.append(city.toMarkdown() + "\r\n");
         }
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(new File("cities.md")));
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
             writer.write(sb.toString());
             writer.close();
+            System.out.println("Successfully output " + cities.size() + " results to " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+//    /**
+//     * Method to print out population reports
+//     * @param populations
+//     */
+//    public static void printPopulationReport(ArrayList<Population> populations) {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("| Area Name | Total Population | Population In Cities | Population Not In Cities |\r\n");
+//        sb.append("| :--- | :--- | :--- | :--- | \r\n");
+//        for (Population population : populations) {
+//            sb.append(population.toMarkdown() + "\r\n");
+//        }
+//        BufferedWriter writer = null;
+//        try {
+//            writer = new BufferedWriter(new FileWriter(new File("population.md")));
+//            writer.write(sb.toString());
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Method to print outputs
@@ -254,7 +290,6 @@ public class App
 
     /**
      * Create a HashMap for every City
-     * @return
      */
     private HashMap<Integer, City> getCities() {
         try {
@@ -289,7 +324,6 @@ public class App
 
     /**
      * Create a HashMap for every Language
-     * @return
      */
     private HashMap<Country, CountryLanguage> getCountryLanguages() {
         try {
@@ -331,7 +365,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
 
-            String strSelect = "SELECT * from country ";
+            String strSelect = "SELECT * from country ORDER BY population desc";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -379,8 +413,8 @@ public class App
         ArrayList<Country> countries = a.getCountries();
         report1(countries);
 
-        ArrayList<City> cities = a.getCities();
-        report7(cities);
+        //ArrayList<City> cities = a.getCities();
+        report7(a.getCities());
 
 
         for(String continent:a.continents){

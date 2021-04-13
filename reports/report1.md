@@ -1,4 +1,4 @@
-# All the countries in the world organised bylargest population to smallest
+# All the countries in the world organised by largest population to smallest
 
 | Code | Name | Continent | Region | Population | Capital |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -235,9 +235,9 @@
 |CCK|Cocos (Keeling) Islands|Oceania|Australia and New Zealand|600|West Island|
 |PCN|Pitcairn|Oceania|Polynesia|50|Adamstown|
 |ATA|Antarctica|Antarctica|Antarctica|0| |
+|ATF|French Southern territories|Antarctica|Antarctica|0| |
 |BVT|Bouvet Island|Antarctica|Antarctica|0| |
 |HMD|Heard Island and McDonald Islands|Antarctica|Antarctica|0| |
 |IOT|British Indian Ocean Territory|Africa|Eastern Africa|0| |
-|UMI|United States Minor Outlying Islands|Oceania|Micronesia/Caribbean|0| |
 |SGS|South Georgia and the South Sandwich Islands|Antarctica|Antarctica|0| |
-|ATF|French Southern territories|Antarctica|Antarctica|0| |
+|UMI|United States Minor Outlying Islands|Oceania|Micronesia/Caribbean|0| |
