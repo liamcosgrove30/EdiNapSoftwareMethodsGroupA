@@ -166,15 +166,14 @@ public class App
      */
     private static void report7(HashMap< Integer, City> cities)
     {
-        // Finding the Set of keys from
-        // the HashMap
+        // Finding the values
         Collection<City> valueSet = cities.values();
 
-        // Creating an ArrayList of keys
-        // by passing the keySet
+        // Creating an ArrayList of values
         ArrayList<City> listOfValues
                 = new ArrayList<City>(valueSet);
 
+        //sort list of cities by population
         sort(listOfValues, new Comparator<City>() {
             @Override
             public int compare(City o1, City o2) {
@@ -411,11 +410,8 @@ public class App
         a.connect("localhost:33060");
 
         ArrayList<Country> countries = a.getCountries();
+
         report1(countries);
-
-        //ArrayList<City> cities = a.getCities();
-        report7(a.getCities());
-
 
         for(String continent:a.continents){
             report2(countries, continent);
@@ -424,6 +420,9 @@ public class App
         for(String region :a.regions){
             report3(countries, region);
         }
+
+        //report7
+        report7(a.getCities());
 
         outputReadme();
 
