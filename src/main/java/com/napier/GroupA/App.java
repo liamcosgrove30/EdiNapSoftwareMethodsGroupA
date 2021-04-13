@@ -365,7 +365,7 @@ public class App
             Statement stmt = con.createStatement();
             // Create string for SQL statement
 
-            String strSelect = "SELECT * from country ORDER BY population desc";
+            String strSelect = "SELECT * from country";
 
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
