@@ -189,7 +189,7 @@ public class App
     }
 
     /**
-     * Generate report 8, cities a continent organised from largest to smallest population
+     * Generate report 8, cities in a continent organised from largest to smallest population
      * @param cities
      * @param continent
      */
@@ -233,6 +233,51 @@ public class App
                                        ") organised by largest population to the smallest", "./reports/report8_" + continent + ".md");
     }
 
+
+    /**
+     * Generate report 9, cities in a region organised from largest to smallest population
+     * @param cities
+     * @param region
+     */
+    private static void report9(HashMap< Integer, City> cities, ArrayList<Country> countries, String region){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        for (Country c1: countries)
+        {
+            if (c1.getRegion().equals(region))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                        result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+        printCityReport(result, "All cities in a region (" + region +
+                                ") organised by largest population to the smallest", "./reports/report9_" + region + ".md");
+    }
 
 
     /**
@@ -471,6 +516,11 @@ public class App
         //report8
         for(String continent:a.continents) {
             report8(a.getCities(), a.getCountries(), continent);
+        }
+
+        //report9
+        for(String region :a.regions){
+            report9(a.getCities(), a.getCountries(), region);
         }
 
         outputReadme();
