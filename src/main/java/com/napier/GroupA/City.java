@@ -11,60 +11,75 @@ public class City {
     private String district;
     private int population;
 
-    public City() {
+    public
+    City () {
     }
 
-    public int getId() {
+    public
+    int getId () {
         return id;
     }
 
-    public void setId(int id) {
+    public
+    void setId (int id) {
         this.id = id;
     }
 
-    public String getName() {
+    public
+    String getName () {
         return name;
     }
 
-    public void setName(String name) {
+    public
+    void setName (String name) {
         this.name = name;
     }
 
-    public Country getCountry() {
+    public
+    Country getCountry () {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public
+    void setCountry (Country country) {
         this.country = country;
     }
 
-    public String getDistrict() {
+    public
+    String getDistrict () {
         return district;
     }
 
-    public void setDistrict(String district) {
+    public
+    void setDistrict (String district) {
         this.district = district;
     }
 
-    public int getPopulation() {
+    public
+    int getPopulation () {
         return population;
     }
 
-    public void setPopulation(int population) {
+    public
+    void setPopulation (int population) {
         this.population = population;
     }
 
+
     @Override
-    public String toString() {
+    public
+    String toString () {
         return "City{" + ", name='" + name + '\'' +
-                "country=" + country.getCode() + '\'' + ", district='" + district + '\'' +
-                ", population=" + population + '}';
+               "country=" + country.getCode () + '\'' + ", district='" + district + '\'' +
+               ", population=" + population + '}';
     }
 
-    public String toMarkdown() {
+    public
+    String toMarkdown () {
         String str = "";
-        str += "|" + name + "|" + country.getCode() + "|" + district + "|" + population + "|";
+        str += "|" + name + "|" + country.getCode () + "|" + district + "|" + population + "|";
         return str;
     }
-
 }
+
+

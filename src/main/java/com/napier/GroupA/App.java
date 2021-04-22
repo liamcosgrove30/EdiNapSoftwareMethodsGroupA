@@ -1,6 +1,5 @@
 package com.napier.GroupA;
 
-import javax.swing.*;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
@@ -164,8 +163,7 @@ public class App
      * Generate report 7, cities in the world from largest to smallest population
      * @param cities
      */
-    private static void report7(HashMap< Integer, City> cities)
-    {
+    private static void report7(HashMap< Integer, City> cities){
         // Finding the values
         Collection<City> valueSet = cities.values();
 
@@ -189,6 +187,52 @@ public class App
         printCityReport(listOfValues, "All the cities in the world organised by " +
                                       "largest population to smallest", "./reports/report7.md");
     }
+
+    /**
+     * Generate report 8, cities a continent organised from largest to smallest population
+     * @param cities
+     * @param continent
+     */
+    private static void report8(HashMap< Integer, City> cities, ArrayList<Country> countries, String continent){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        for (Country c1: countries)
+        {
+            if (c1.getContinent().equals(continent))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                        result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+        printCityReport(result, "All cities in a continent (" + continent +
+                                       ") organised by largest population to the smallest", "./reports/report8_" + continent + ".md");
+    }
+
 
 
     /**
@@ -423,6 +467,11 @@ public class App
 
         //report7
         report7(a.getCities());
+
+        //report8
+        for(String continent:a.continents) {
+            report8(a.getCities(), a.getCountries(), continent);
+        }
 
         outputReadme();
 
