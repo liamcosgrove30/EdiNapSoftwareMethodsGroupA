@@ -466,7 +466,7 @@ public class App
     }
 
     /**
-     * Generate report 15, cities in a country organised from largest to smallest population
+     * Generate report 15, top N populated cities in a country
      * @param cities
      * @param countries
      * @param country
