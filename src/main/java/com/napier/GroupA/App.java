@@ -357,7 +357,7 @@ public class App
         // Get top N cities
         List<City> nValues = listOfValues.subList(0, N);
 
-        printCityNReport(nValues, "All the cities in the world organised by " +
+        printCityNReport(nValues, "Top N cities in the world organised by " +
                 "largest population to smallest", "./reports/report12.md");
     }
 
@@ -407,9 +407,9 @@ public class App
         });
 
         // Get top N cities
-        ArrayList<City> nValues = (ArrayList<City>) result.subList(0, N);
+        List<City> nValues = result.subList(0, N);
 
-        printCityReport(nValues, "All cities in a continent (" + continent +
+        printCityNReport(nValues, "Top N cities in a continent (" + continent +
                 ") organised by largest population to the smallest", "./reports/report13_" + continent + ".md");
     }
 
@@ -459,9 +459,9 @@ public class App
         });
 
         // Get top N cities
-        ArrayList<City> nValues = (ArrayList<City>) result.subList(0, N);
+        List<City> nValues = result.subList(0, N);
 
-        printCityReport(nValues, "All cities in a region (" + region +
+        printCityNReport(nValues, "Top N cities in a region (" + region +
                 ") organised by largest population to the smallest", "./reports/report14_" + region + ".md");
     }
 
@@ -512,9 +512,9 @@ public class App
         });
 
         // Get top N cities
-        ArrayList<City> nValues = (ArrayList<City>) result.subList(0, N);
+        List<City> nValues = result.subList(0, N);
 
-        printCityReport(nValues, "All cities in a country (" + country +
+        printCityNReport(nValues, "Top N cities in a country (" + country +
                 ") organised by largest population to the smallest", "./reports/report15_" + country + ".md");
     }
 
