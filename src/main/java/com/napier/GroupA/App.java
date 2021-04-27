@@ -765,6 +765,24 @@ public class App
         for(Country country : a.getCountries())
         report10(a.getCities(), a.getCountries(), country);
 
+        //report12
+        report12(a.getCities());
+
+        //report13
+        for(String continent:a.continents) {
+            report13(a.getCities(), a.getCountries(), continent);
+        }
+
+        //report14
+        for(String region:a.regions){
+            report14(a.getCities(), a.getCountries(), region);
+        }
+
+        //report15
+        for(Country country:a.getCountries()){
+            report15(a.getCities(), a.getCountries(), country);
+        }
+
         outputReadme();
 
         // Disconnect from database
