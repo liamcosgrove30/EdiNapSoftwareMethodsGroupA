@@ -160,6 +160,28 @@ public class App
                 ") organised from largest population to smallest", "./reports/report3_" + region + ".md");
     }
 
+    private static void report4(ArrayList<Country> countries){
+        ArrayList<Country> countries1 = new ArrayList<>();
+
+        Collections.sort(countries, new Comparator<Country>() {
+            @Override
+            public int compare(Country o1, Country o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return -1;
+                }else{return 1;}
+            }
+        });
+
+        // Number of countries to print, placeholder fixed value for testing
+        int N = 5;
+
+        // Get top N countries
+        List<Country> nValues = countries.subList(0, N);
+
+        printCountryNReport(nValues, "The top " + N+ " countries in the world organised by" +
+                "largest population to smallest", "./reports/report4.md");
+    }
+
     /**
      * Generate report 7, cities in the world from largest to smallest population
      * @param cities
@@ -797,6 +819,9 @@ public class App
         for(String region :a.regions){
             report3(countries, region);
         }
+
+        //report4
+        report4(countries);
 
         //report7
         report7(a.getCities());
