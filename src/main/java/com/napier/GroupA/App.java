@@ -160,7 +160,7 @@ public class App
                 ") organised from largest population to smallest", "./reports/report3_" + region + ".md");
     }
 
-    private static void report4(ArrayList<Country> countries){
+    private static void report4(ArrayList<Country> countries, int N){
         ArrayList<Country> countries1 = new ArrayList<>();
 
         Collections.sort(countries, new Comparator<Country>() {
@@ -172,8 +172,6 @@ public class App
             }
         });
 
-        // Number of countries to print, placeholder fixed value for testing
-        int N = 5;
 
         // Get top N countries
         List<Country> nValues = countries.subList(0, N);
@@ -640,26 +638,6 @@ public class App
         }
     }
 
-//    /**
-//     * Method to print out population reports
-//     * @param populations
-//     */
-//    public static void printPopulationReport(ArrayList<Population> populations) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("| Area Name | Total Population | Population In Cities | Population Not In Cities |\r\n");
-//        sb.append("| :--- | :--- | :--- | :--- | \r\n");
-//        for (Population population : populations) {
-//            sb.append(population.toMarkdown() + "\r\n");
-//        }
-//        BufferedWriter writer = null;
-//        try {
-//            writer = new BufferedWriter(new FileWriter(new File("population.md")));
-//            writer.write(sb.toString());
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /**
      * Method to print outputs
@@ -821,7 +799,7 @@ public class App
         }
 
         //report4
-        report4(countries);
+        report4(countries, 7);
 
         //report7
         report7(a.getCities());
