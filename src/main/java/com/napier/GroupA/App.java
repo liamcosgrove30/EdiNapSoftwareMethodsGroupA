@@ -327,7 +327,7 @@ public class App
     }
 
     /**
-     * Generate report 12, top N populated cities in the world where N is provided by the user.
+     * Generate report 12, top N populated cities in the world
      * @param cities
      */
     private static void report12(HashMap< Integer, City> cities){
@@ -359,6 +359,58 @@ public class App
 
         printCityReport(nValues, "All the cities in the world organised by " +
                 "largest population to smallest", "./reports/report12.md");
+    }
+
+    /**
+     * Generate report 13, top N populated cities in a continent
+     * @param cities
+     * @param continent
+     */
+    private static void report13(HashMap< Integer, City> cities, ArrayList<Country> countries, String continent){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        // Number of cities to print, placeholder fixed value for testing
+        int N = 5;
+
+        for (Country c1: countries)
+        {
+            if (c1.getContinent().equals(continent))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                        result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+
+        // Get top N cities
+        ArrayList<City> nValues = (ArrayList<City>) result.subList(0, N);
+
+        printCityReport(nValues, "All cities in a continent (" + continent +
+                ") organised by largest population to the smallest", "./reports/report13_" + continent + ".md");
     }
 
     /**
