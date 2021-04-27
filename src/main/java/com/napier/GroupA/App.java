@@ -2,10 +2,7 @@ package com.napier.GroupA;
 
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Main App where we connect to the database and extract report information.
@@ -172,11 +169,13 @@ public class App
             }
         });
 
+        // Number of countries to print, placeholder fixed value for testing
+        int N = 5;
 
-        for(int i =0;i < input; i++) {
-            countries1.add(countries.get(input));
-        }
-        printCountryReport(countries1, "The top " + input+ " countries in the world organised by" +
+        // Get top N countries
+        List<Country> nValues = countries.subList(0, N);
+
+        printCountryNReport(nValues, "The top " + input+ " countries in the world organised by" +
                 "largest population to smallest", "./reports/report4.md");
     }
 
@@ -187,6 +186,31 @@ public class App
      * @param filename
      */
     public static void printCountryReport(ArrayList<Country> countries, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | :--- | :--- |\r\n");
+        for (Country country : countries) {
+            sb.append(country.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + countries.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to print out N countries
+     * @param countries
+     * @param heading
+     * @param filename
+     */
+    public static void printCountryNReport(List<Country> countries, String heading, String filename) {
         StringBuilder sb = new StringBuilder();
         sb.append("# " + heading + "\r\n\r\n");
         sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
