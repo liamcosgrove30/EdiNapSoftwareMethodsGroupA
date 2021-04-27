@@ -327,6 +327,41 @@ public class App
     }
 
     /**
+     * Generate report 12, top N populated cities in the world where N is provided by the user.
+     * @param cities
+     */
+    private static void report12(HashMap< Integer, City> cities){
+        // Finding the values
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values
+        ArrayList<City> listOfValues
+                = new ArrayList<City>(valueSet);
+
+        // Number of cities to print, placeholder fixed value for testing
+        int N = 5;
+
+        // Sort list of cities by population
+        sort(listOfValues, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }
+                else{
+                    return 1;
+                }
+            }
+        });
+
+        // Get top N cities
+        ArrayList<City> nValues = (ArrayList<City>) listOfValues.subList(0, N);
+
+        printCityReport(nValues, "All the cities in the world organised by " +
+                "largest population to smallest", "./reports/report12.md");
+    }
+
+    /**
      * Method to print out every country
      * @param countries
      * @param heading
