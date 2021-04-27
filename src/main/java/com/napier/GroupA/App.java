@@ -31,6 +31,7 @@ public class App
      */
     String[] continents = {"North America", "South America", "Asia", "Africa", "Europe", "Oceania", "Antarctica"};
 
+
     /**
      * Connect to the MySQL database.
      */
@@ -279,6 +280,51 @@ public class App
                                 ") organised by largest population to the smallest", "./reports/report9_" + region + ".md");
     }
 
+    /**
+     * Generate report 10, cities in a country organised from largest to smallest population
+     * @param cities
+     * @param countries
+     * @param country
+     */
+    private static void report10(HashMap< Integer, City> cities, ArrayList<Country> countries, Country country){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        for (Country c1: countries)
+        {
+            if (c1.getName().equals(country))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                        result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+        printCityReport(result, "All cities in a country (" + country +
+                                ") organised by largest population to the smallest", "./reports/report10_" + country + ".md");
+    }
 
     /**
      * Method to print out every country
@@ -522,6 +568,10 @@ public class App
         for(String region :a.regions){
             report9(a.getCities(), a.getCountries(), region);
         }
+
+        //report10
+        for(Country country : a.getCountries())
+        report10(a.getCities(), a.getCountries(), country);
 
         outputReadme();
 
