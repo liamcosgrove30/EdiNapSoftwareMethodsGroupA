@@ -544,6 +544,31 @@ public class App
     }
 
     /**
+     * Method to print out N countries
+     * @param countries
+     * @param heading
+     * @param filename
+     */
+    public static void printCountryNReport(List<Country> countries, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | :--- | :--- |\r\n");
+        for (Country country : countries) {
+            sb.append(country.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + countries.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Method to print out every city
      * @param cities
      * @param heading
