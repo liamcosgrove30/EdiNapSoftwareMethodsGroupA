@@ -355,9 +355,9 @@ public class App
         });
 
         // Get top N cities
-        ArrayList<City> nValues = (ArrayList<City>) listOfValues.subList(0, N);
+        List<City> nValues = listOfValues.subList(0, N);
 
-        printCityReport(nValues, "All the cities in the world organised by " +
+        printCityNReport(nValues, "All the cities in the world organised by " +
                 "largest population to smallest", "./reports/report12.md");
     }
 
@@ -550,6 +550,31 @@ public class App
      * @param filename
      */
     public static void printCityReport(ArrayList<City> cities, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Name | CountryCode | District | Population |\r\n");
+        sb.append("| :--- | :--- | :--- | :---: |\r\n");
+        for (City city : cities) {
+            sb.append(city.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + cities.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to print out N cities
+     * @param cities
+     * @param heading
+     * @param filename
+     */
+    public static void printCityNReport(List<City> cities, String heading, String filename) {
         StringBuilder sb = new StringBuilder();
         sb.append("# " + heading + "\r\n\r\n");
         sb.append("| Name | CountryCode | District | Population |\r\n");
