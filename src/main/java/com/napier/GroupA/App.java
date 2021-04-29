@@ -521,58 +521,58 @@ public class App
                 ") organised by largest population to the smallest", "./reports/report14_" + region + ".md");
     }
 
-    /**
-     * Generate report 15, top N populated cities in a country
-     * @param cities
-     * @param countries
-     * @param country
-     */
-    private static void report15(HashMap< Integer, City> cities, ArrayList<Country> countries, Country country){
-        // Finding the values for cities
-        Collection<City> valueSet = cities.values();
-
-        // Creating an ArrayList of values of cities
-        ArrayList<City> listOfValues1
-                = new ArrayList<City>(valueSet);
-
-        // Creating an ArrayList for the resulting values
-        ArrayList<City> result = new ArrayList<City>();
-
-        // Number of cities to print, placeholder fixed value for testing
-        int N = 5;
-
-        for (Country c1: countries)
-        {
-            if (c1.getName().equals(country))
-            {
-                for (City c: valueSet)
-                {
-                    if (c.getCountry().getCode().equals(c1.getCode()))
-                    {
-                        result.add(c);
-                    }
-                }
-            }
-        }
-
-        //sort list of cities by population
-        sort(result, new Comparator<City>() {
-            @Override
-            public int compare(City o1, City o2) {
-                if (o1.getPopulation() > o2.getPopulation()){
-                    return  -1;
-                }else{
-                    return 1;
-                }
-            }
-        });
-
-        // Get top N cities
-        List<City> nValues = result.subList(0, N);
-
-        printCityNReport(nValues, "Top N cities in a country (" + country +
-                ") organised by largest population to the smallest", "./reports/report15_" + country + ".md");
-    }
+//    /**
+//     * Generate report 15, top N populated cities in a country
+//     * @param cities
+//     * @param countries
+//     * @param country
+//     */
+//    private static void report15(HashMap< Integer, City> cities, ArrayList<Country> countries, Country country){
+//        // Finding the values for cities
+//        Collection<City> valueSet = cities.values();
+//
+//        // Creating an ArrayList of values of cities
+//        ArrayList<City> listOfValues1
+//                = new ArrayList<City>(valueSet);
+//
+//        // Creating an ArrayList for the resulting values
+//        ArrayList<City> result = new ArrayList<City>();
+//
+//        // Number of cities to print, placeholder fixed value for testing
+//        int N = 5;
+//
+//        for (Country c1: countries)
+//        {
+//            if (c1.getName().equals(country))
+//            {
+//                for (City c: valueSet)
+//                {
+//                    if (c.getCountry().getCode().equals(c1.getCode()))
+//                    {
+//                        result.add(c);
+//                    }
+//                }
+//            }
+//        }
+//
+//        //sort list of cities by population
+//        sort(result, new Comparator<City>() {
+//            @Override
+//            public int compare(City o1, City o2) {
+//                if (o1.getPopulation() > o2.getPopulation()){
+//                    return  -1;
+//                }else{
+//                    return 1;
+//                }
+//            }
+//        });
+//
+//        // Get top N cities
+//        List<City> nValues = result.subList(0, N);
+//
+//        printCityNReport(nValues, "Top N cities in a country (" + country +
+//                ") organised by largest population to the smallest", "./reports/report15_" + country + ".md");
+//    }
 
     /**
      * Method to print out every country
@@ -868,10 +868,10 @@ public class App
             report14(a.getCities(), a.getCountries(), region);
         }
 
-        //report15
-        for(Country country:a.getCountries()){
-            report15(a.getCities(), a.getCountries(), country);
-        }
+//        //report15
+//        for(Country country:a.getCountries()){
+//            report15(a.getCities(), a.getCountries(), country);
+//        }
 
         //outputReadme();
 
