@@ -521,13 +521,13 @@ public class App
                 ") organised by largest population to the smallest", "./reports/report14_" + region + ".md");
     }
 
-    /**
+/*    *//**
      * Generate report 15, top N populated cities in a country
      * @param cities
      * @param countries
      * @param country
-     */
-    private static void report15(HashMap< Integer, City> cities, ArrayList<Country> countries, Country country){
+     *//*
+    private static void report15(HashMap< Integer, City> cities, ArrayList<Country> countries, String country){
         // Finding the values for cities
         Collection<City> valueSet = cities.values();
 
@@ -572,7 +572,7 @@ public class App
 
         printCityNReport(nValues, "Top N cities in a country (" + country +
                 ") organised by largest population to the smallest", "./reports/report15_" + country + ".md");
-    }
+    }*/
 
     /**
      * Method to print out every country
@@ -868,10 +868,10 @@ public class App
             report14(a.getCities(), a.getCountries(), region);
         }
 
-        //report15
-        for(Country country:a.getCountries()){
-            report15(a.getCities(), a.getCountries(), country);
-        }
+//        //report15
+//        for(String country:a.countries){
+//            report15(a.getCities(), a.getCountries(), country);
+//        }
 
         outputReadme();
 
