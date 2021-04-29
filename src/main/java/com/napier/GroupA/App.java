@@ -31,6 +31,43 @@ public class App
      */
     String[] continents = {"North America", "South America", "Asia", "Africa", "Europe", "Oceania", "Antarctica"};
 
+    /**
+     * Countries
+     * array from github link : https://gist.github.com/whit3hawks/3b507d7005448eebb9c9e78ce853c254
+     * made some changes within
+     */
+    String[] countries = {"Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica",
+            "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+            "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
+            "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory",
+            "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde",
+            "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands",
+            "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire",
+            "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+            "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia",
+            "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana",
+            "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece",
+            "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti",
+            "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India",
+            "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
+            "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan",
+            "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein",
+            "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia",
+            "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico",
+            "Micronesia," + " Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco",
+            "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia",
+            "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway",
+            "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland",
+            "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis",
+            "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
+            "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands",
+            "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena",
+            "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland",
+            "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo",
+            "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu",
+            "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands",
+            "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands, British", "Virgin Islands, U.S.",
+            "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe", "Palestine"};
 
     /**
      * Connect to the MySQL database.
@@ -160,6 +197,26 @@ public class App
                 ") organised from largest population to smallest", "./reports/report3_" + region + ".md");
     }
 
+    private static void report4(ArrayList<Country> countries, int N){
+        ArrayList<Country> countries1 = new ArrayList<>();
+
+        Collections.sort(countries, new Comparator<Country>() {
+            @Override
+            public int compare(Country o1, Country o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return -1;
+                }else{return 1;}
+            }
+        });
+
+
+        // Get top N countries
+        List<Country> nValues = countries.subList(0, N);
+
+        printCountryNReport(nValues, "The top " + N+ " countries in the world organised by" +
+                "largest population to smallest", "./reports/report4.md");
+    }
+
     /**
      * Generate report 7, cities in the world from largest to smallest population
      * @param cities
@@ -283,10 +340,9 @@ public class App
     /**
      * Generate report 10, cities in a country organised from largest to smallest population
      * @param cities
-     * @param countries
      * @param country
      */
-    private static void report10(HashMap< Integer, City> cities, ArrayList<Country> countries, Country country){
+    private static void report10(HashMap< Integer, City> cities, ArrayList< Country > countries, String country){
         // Finding the values for cities
         Collection<City> valueSet = cities.values();
 
@@ -296,6 +352,194 @@ public class App
 
         // Creating an ArrayList for the resulting values
         ArrayList<City> result = new ArrayList<City>();
+
+        for (Country c1: countries)
+        {
+            if (c1.getName().equals(country))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                     result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+        printCityReport(result, "All cities in a country (" + country +
+                                ") organised by largest population to the smallest", "./reports/report10_" + country + ".md");
+    }
+
+    /**
+     * Generate report 12, top N populated cities in the world
+     * @param cities
+     */
+    private static void report12(HashMap< Integer, City> cities){
+        // Finding the values
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values
+        ArrayList<City> listOfValues
+                = new ArrayList<City>(valueSet);
+
+        // Number of cities to print, placeholder fixed value for testing
+        int N = 5;
+
+        // Sort list of cities by population
+        sort(listOfValues, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if(o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }
+                else{
+                    return 1;
+                }
+            }
+        });
+
+        // Get top N cities
+        List<City> nValues = listOfValues.subList(0, N);
+
+        printCityNReport(nValues, "Top N cities in the world organised by " +
+                "largest population to smallest", "./reports/report12.md");
+    }
+
+    /**
+     * Generate report 13, top N populated cities in a continent
+     * @param cities
+     * @param continent
+     */
+    private static void report13(HashMap< Integer, City> cities, ArrayList<Country> countries, String continent){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        // Number of cities to print, placeholder fixed value for testing
+        int N = 5;
+
+        for (Country c1: countries)
+        {
+            if (c1.getContinent().equals(continent))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                        result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+
+        // Get top N cities
+        List<City> nValues = result.subList(0, N);
+
+        printCityNReport(nValues, "Top N cities in a continent (" + continent +
+                ") organised by largest population to the smallest", "./reports/report13_" + continent + ".md");
+    }
+
+    /**
+     * Generate report 14, top N populated cities in a region
+     * @param cities
+     * @param region
+     */
+    private static void report14(HashMap< Integer, City> cities, ArrayList<Country> countries, String region){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        // Number of cities to print, placeholder fixed value for testing
+        int N = 5;
+
+        for (Country c1: countries)
+        {
+            if (c1.getRegion().equals(region))
+            {
+                for (City c: valueSet)
+                {
+                    if (c.getCountry().getCode().equals(c1.getCode()))
+                    {
+                        result.add(c);
+                    }
+                }
+            }
+        }
+
+        //sort list of cities by population
+        sort(result, new Comparator<City>() {
+            @Override
+            public int compare(City o1, City o2) {
+                if (o1.getPopulation() > o2.getPopulation()){
+                    return  -1;
+                }else{
+                    return 1;
+                }
+            }
+        });
+
+        // Get top N cities
+        List<City> nValues = result.subList(0, N);
+
+        printCityNReport(nValues, "Top N cities in a region (" + region +
+                ") organised by largest population to the smallest", "./reports/report14_" + region + ".md");
+    }
+
+    /**
+     * Generate report 15, top N populated cities in a country
+     * @param cities
+     * @param countries
+     * @param country
+     */
+    private static void report15(HashMap< Integer, City> cities, ArrayList<Country> countries, Country country){
+        // Finding the values for cities
+        Collection<City> valueSet = cities.values();
+
+        // Creating an ArrayList of values of cities
+        ArrayList<City> listOfValues1
+                = new ArrayList<City>(valueSet);
+
+        // Creating an ArrayList for the resulting values
+        ArrayList<City> result = new ArrayList<City>();
+
+        // Number of cities to print, placeholder fixed value for testing
+        int N = 5;
 
         for (Country c1: countries)
         {
@@ -322,8 +566,12 @@ public class App
                 }
             }
         });
-        printCityReport(result, "All cities in a country (" + country +
-                                ") organised by largest population to the smallest", "./reports/report10_" + country + ".md");
+
+        // Get top N cities
+        List<City> nValues = result.subList(0, N);
+
+        printCityNReport(nValues, "Top N cities in a country (" + country +
+                ") organised by largest population to the smallest", "./reports/report15_" + country + ".md");
     }
 
     /**
@@ -333,6 +581,31 @@ public class App
      * @param filename
      */
     public static void printCountryReport(ArrayList<Country> countries, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| :--- | :--- | :--- | :--- | :--- | :--- |\r\n");
+        for (Country country : countries) {
+            sb.append(country.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + countries.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to print out N countries
+     * @param countries
+     * @param heading
+     * @param filename
+     */
+    public static void printCountryNReport(List<Country> countries, String heading, String filename) {
         StringBuilder sb = new StringBuilder();
         sb.append("# " + heading + "\r\n\r\n");
         sb.append("| Code | Name | Continent | Region | Population | Capital |\r\n");
@@ -376,30 +649,35 @@ public class App
         }
     }
 
-//    /**
-//     * Method to print out population reports
-//     * @param populations
-//     */
-//    public static void printPopulationReport(ArrayList<Population> populations) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append("| Area Name | Total Population | Population In Cities | Population Not In Cities |\r\n");
-//        sb.append("| :--- | :--- | :--- | :--- | \r\n");
-//        for (Population population : populations) {
-//            sb.append(population.toMarkdown() + "\r\n");
-//        }
-//        BufferedWriter writer = null;
-//        try {
-//            writer = new BufferedWriter(new FileWriter(new File("population.md")));
-//            writer.write(sb.toString());
-//            writer.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     /**
-     * Method to print outputs
+     * Method to print out N cities
+     * @param cities
+     * @param heading
+     * @param filename
      */
+    public static void printCityNReport(List<City> cities, String heading, String filename) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# " + heading + "\r\n\r\n");
+        sb.append("| Name | CountryCode | District | Population |\r\n");
+        sb.append("| :--- | :--- | :--- | :---: |\r\n");
+        for (City city : cities) {
+            sb.append(city.toMarkdown() + "\r\n");
+        }
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(new File(filename)));
+            writer.write(sb.toString());
+            writer.close();
+            System.out.println("Successfully output " + cities.size() + " results to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+/*    *//**
+     * Method to print outputs
+     *//*
     private static void outputReadme() {
         File dir = new File("./reports/");
         File [] files = dir.listFiles(new FilenameFilter() {
@@ -420,7 +698,7 @@ public class App
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Create a HashMap for every City
@@ -556,6 +834,9 @@ public class App
             report3(countries, region);
         }
 
+        //report4
+        report4(countries, 7);
+
         //report7
         report7(a.getCities());
 
@@ -570,10 +851,29 @@ public class App
         }
 
         //report10
-        for(Country country : a.getCountries())
-        report10(a.getCities(), a.getCountries(), country);
+        for (String country : a.countries){
+            report10(a.getCities(), a.getCountries(), country);
+        }
 
-        outputReadme();
+        //report12
+        report12(a.getCities());
+
+        //report13
+        for(String continent:a.continents) {
+            report13(a.getCities(), a.getCountries(), continent);
+        }
+
+        //report14
+        for(String region:a.regions){
+            report14(a.getCities(), a.getCountries(), region);
+        }
+
+        //report15
+        for(Country country:a.getCountries()){
+            report15(a.getCities(), a.getCountries(), country);
+        }
+
+        //outputReadme();
 
         // Disconnect from database
         a.disconnect();
